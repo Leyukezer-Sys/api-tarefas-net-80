@@ -9,5 +9,7 @@
         public bool Feito { get; set; } = false;
 
         public DateTime Data { get; set; } = DateTime.Now;
+
+        public DateTime? Data_feito { get; set; }
     }
 }

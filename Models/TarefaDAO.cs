@@ -1,5 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using ApiTarefasNet80.Database;
+using System.Collections.Generic;
+using System.Data;
 
 namespace ApiTarefasNet80.Models
 {
@@ -85,12 +87,16 @@ namespace ApiTarefasNet80.Models
                 // Tarefa _tarefa = new();
 
                 var query = _conn.Query();
-                query.CommandText = "SELECT * FROM tarefas WHERE id = @_id";
+                query.CommandText = "SELECT * FROM tarefas WHERE id_tar = @_id";
 
                 query.Parameters.AddWithValue("@_id", id);
 
                 MySqlDataReader reader = query.ExecuteReader();
 
+                if (!reader.HasRows)
+                {
+                    return null;
+                }
                 while (reader.Read())
                 {
                     _tarefa.Id = reader.GetInt32("id_tar");

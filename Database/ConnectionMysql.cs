@@ -8,7 +8,7 @@ namespace ApiTarefasNet80.Database
 
         private static readonly string host = "localhost";
 
-        private static readonly string port = "3308";
+        private static readonly string port = "3360";
 
         private static readonly string user = "root";
 

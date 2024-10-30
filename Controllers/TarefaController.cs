@@ -112,5 +112,34 @@ namespace ApiTarefasNet80.Controllers
                 return Problem(e.Message);
             }
         }
+
+
+        [HttpGet("{id}/finalizar")]
+        public IActionResult GetFinalizar(int id)
+        {
+            try
+            {
+                var tarefa = new TarefaDAO().GetById(id);
+
+                if (tarefa == null)
+                {
+                    return NotFound();
+                }
+
+                tarefa.Descricao = tarefa.Descricao;
+                tarefa.Feito = true;
+                tarefa.Data_feito = DateTime.Now;
+
+                new TarefaDAO().Update(tarefa);
+
+                return Ok(tarefa);
+
+                return Ok(tarefa);
+            }
+            catch (Exception)
+            {
+                return Problem("Ocorreram erros ao processar a solicitação");
+            }
+        }
     }
 }
