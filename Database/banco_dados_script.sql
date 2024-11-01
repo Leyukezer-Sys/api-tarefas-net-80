@@ -13,6 +13,14 @@ CREATE TABLE `tarefas` (
 
 INSERT INTO `tarefas` (`descricao_tar`) VALUES ("Estudo de API - PART 1"), ("Estudo de API - PART 2"), ("Estudo de API - PART 3");
 UPDATE tarefas SET feito_tar = TRUE WHERE id_tar = 1;
-SELECT * FROM tarefas_db.tarefas;
 
 ALTER TABLE tarefas ADD column data_feito_tar datetime;
+
+SELECT * FROM tarefas_db.tarefas;
+
+CREATE TABLE `categorias`(
+`id_cat` INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+`nome_cat` TEXT NOT NULL
+);
+
+SELECT * FROM tarefas_db.categorias;

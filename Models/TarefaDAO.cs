@@ -122,10 +122,11 @@ namespace ApiTarefasNet80.Models
             try
             {
                 var query = _conn.Query();
-                query.CommandText = "UPDATE tarefas SET descricao_tar = @_descricao, feito_tar = @_feito WHERE id_tar = @_id";
+                query.CommandText = "UPDATE tarefas SET descricao_tar = @_descricao, feito_tar = @_feito, data_feito_tar = @_data_feito WHERE id_tar = @_id";
 
                 query.Parameters.AddWithValue("@_descricao", item.Descricao);
                 query.Parameters.AddWithValue("@_feito", item.Feito);
+                query.Parameters.AddWithValue("@_data_feito", item.Data_feito);
                 query.Parameters.AddWithValue("@_id", item.Id);
 
                 var result = query.ExecuteNonQuery();

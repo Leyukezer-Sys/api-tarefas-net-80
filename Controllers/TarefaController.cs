@@ -49,7 +49,18 @@ namespace ApiTarefasNet80.Controllers
             var tarefa = new Tarefa();
 
             tarefa.Descricao = item.Descricao;
-            tarefa.Feito = item.Feito;
+
+            if (item.Feito.Equals("true") || item.Feito == true)
+            {
+                tarefa.Feito = true;
+                tarefa.Data_feito = DateTime.Now;
+            }
+            else
+            {
+                tarefa.Feito = false;
+                tarefa.Data_feito = null;
+            }
+
             tarefa.Data = DateTime.Now;
 
             try
@@ -79,8 +90,16 @@ namespace ApiTarefasNet80.Controllers
                 }
 
                 tarefa.Descricao = item.Descricao;
-                tarefa.Feito = item.Feito;
-
+                if (item.Feito.Equals("true") || item.Feito == true)
+                {
+                    tarefa.Feito = true;
+                    tarefa.Data_feito = DateTime.Now;
+                }
+                else
+                {
+                    tarefa.Feito = false;
+                    tarefa.Data_feito = null;
+                }
                 new TarefaDAO().Update(tarefa);
 
                 return Ok(tarefa);
@@ -114,8 +133,8 @@ namespace ApiTarefasNet80.Controllers
         }
 
 
-        [HttpGet("{id}/finalizar")]
-        public IActionResult GetFinalizar(int id)
+        [HttpGet("{id}/feito")]
+        public IActionResult Feito(int id)
         {
             try
             {
@@ -131,8 +150,6 @@ namespace ApiTarefasNet80.Controllers
                 tarefa.Data_feito = DateTime.Now;
 
                 new TarefaDAO().Update(tarefa);
-
-                return Ok(tarefa);
 
                 return Ok(tarefa);
             }
