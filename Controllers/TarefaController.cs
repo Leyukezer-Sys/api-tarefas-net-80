@@ -145,7 +145,6 @@ namespace ApiTarefasNet80.Controllers
                     return NotFound();
                 }
 
-                tarefa.Descricao = tarefa.Descricao;
                 tarefa.Feito = true;
                 tarefa.Data_feito = DateTime.Now;
 

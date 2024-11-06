@@ -11,5 +11,8 @@ namespace ApiTarefasNet80.DTOs
 
         [DefaultValue(false)]
         public bool Feito { get; set; } = false;
+
+        [Required(ErrorMessage = "Campo obrigatório")]
+        public int Categoria { get; set; }
     }
 }

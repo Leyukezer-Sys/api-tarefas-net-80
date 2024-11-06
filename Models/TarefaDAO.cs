@@ -19,10 +19,11 @@ namespace ApiTarefasNet80.Models
             try
             {
                 var query = _conn.Query();
-                query.CommandText = "INSERT INTO tarefas (descricao_tar, data_tar) VALUES (@descricao, @data)";
+                query.CommandText = "INSERT INTO tarefas (descricao_tar, data_tar, feito_tar) VALUES (@descricao, @data, @feito)";
 
                 query.Parameters.AddWithValue("@descricao", item.Descricao);
                 query.Parameters.AddWithValue("@data", item.Data.ToString("yyyy-MM-dd HH:mm:ss")); //"10/11/1990" -> "1990-11-10"
+                query.Parameters.AddWithValue("@feito", item.Feito);
 
 
                 var result = query.ExecuteNonQuery();
@@ -52,19 +53,33 @@ namespace ApiTarefasNet80.Models
                 // List<Tarefa> list = [];
 
                 var query = _conn.Query();
-                query.CommandText = "SELECT * FROM tarefas";
+                query.CommandText = "SELECT * FROM tarefas LEFT JOIN categorias ON id_cat = fk_id_cat";
 
                 MySqlDataReader reader = query.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    list.Add(new Tarefa()
+                    var tarefa = new Tarefa()
                     {
                         Id = reader.GetInt32("id_tar"),
                         Descricao = reader.GetString("descricao_tar"),
                         Data = reader.GetDateTime("data_tar"),
-                        Feito = reader.GetBoolean("feito_tar")
-                    });
+                        Feito = reader.GetBoolean("feito_tar"),
+                        Data_feito = reader.IsDBNull("data_feito_tar") ?
+                                           (DateTime?)null :
+                                           (DateTime?)reader.GetDateTime("data_feito_tar")
+                    };
+                    if (!reader.IsDBNull("id_cat"))
+                    {
+                        var categoria = new Categoria()
+                        {
+                            Id = reader.GetInt32("id_cat"),
+                            Nome = reader.GetString("nome_cat")
+                        };
+                        tarefa.Categoria = categoria;
+                    }
+
+                    list.Add(tarefa);
                 }
 
                 return list;

@@ -11,5 +11,7 @@
         public DateTime Data { get; set; } = DateTime.Now;
 
         public DateTime? Data_feito { get; set; }
+
+        public Categoria Categoria { get; set; }
     }
 }
